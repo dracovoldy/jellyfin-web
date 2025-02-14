@@ -60,7 +60,7 @@
     left: 30%;
     transform: translate(-50%, -50%);
     display: block;
-    z-index: 1;
+    z-index: 3;
 }
 
 /* Logos set to a fraction of the viewport (vw) instead of % */
@@ -93,6 +93,7 @@
 
 /* Info Section */
 .age-rating {
+    position: relative;
     display: inline-block;
     align-items: center;
     margin-left: 5px;
@@ -179,4 +180,38 @@
 
 .featured-slider .right-arrow {
     right: 10px;
+}
+
+.featured-info {
+    position: absolute;
+    z-index: 2;
+}
+
+.featured-info,
+.featured-info * {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.featured-info::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Make it massively larger than any screen/container
+       so that the radial fade finishes *beyond* visible area */
+    width: 3000px;
+    height: 3000px;
+
+    pointer-events: none;
+    z-index: 1;
+
+    /* A large radial gradient that goes from semi-black in the center 
+       to fully transparent well before reaching 3000px */
+    background: radial-gradient(circle farthest-corner at center,
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0) 20%);
 }
