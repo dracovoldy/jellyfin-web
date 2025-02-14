@@ -188,7 +188,8 @@
 }
 
 .featured-info,
-.featured-info * {
+.featured-info .plot,
+.featured-info .ratings {
     background: transparent !important;
     border: none !important;
     outline: none !important;
@@ -207,7 +208,7 @@
     height: 3000px;
 
     pointer-events: none;
-    z-index: 1;
+    z-index: -1;
 
     /* A large radial gradient that goes from semi-black in the center 
        to fully transparent well before reaching 3000px */
