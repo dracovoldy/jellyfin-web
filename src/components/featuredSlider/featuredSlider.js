@@ -83,8 +83,8 @@ export function renderFeaturedSlider(container, items, apiClient) {
         const imdbRating = typeof item.CommunityRating === 'number' ? `${item.CommunityRating.toFixed(1)} ⭐` : 'N/A ⭐';
         const tomatoRating = typeof item.CriticRating === 'number' ? `${item.CriticRating}%` : 'N/A';
         const maturity = item.OfficialRating || 'N/A';
-        const plot = item.Overview || 'No overview available';
-        truncateText(plot, 360);
+        let plot = item.Overview || 'No overview available';
+        plot = truncateText(plot, 360);
 
         const details = document.createElement('div');
         details.className = 'ratings';
@@ -125,124 +125,126 @@ export function renderFeaturedSlider(container, items, apiClient) {
         return slide;
     }
 
-    // Helpers: check image brightness and append class
-    function checkImageAndAppendClass(imgElement, logoUrl) {
-        // calculateImageBrightness(logoUrl, (brightness) => {
-        //     // Threshold for classifying as dark or light
-        //     console.log('Brightness:', brightness, 'Logo URL:', logoUrl);
-        //     const brightnessThreshold = 40; // Midpoint on 0-255 scale
-        //     if (brightness < brightnessThreshold) {
-        //         imgElement.classList.add('dark-logo');
-        //     } else {
-        //         imgElement.classList.add('light-logo');
-        //     }
-        // });
+    // // Helpers: check image brightness and append class
+    // function checkImageAndAppendClass(imgElement, logoUrl) {
+    //     // calculateImageBrightness(logoUrl, (brightness) => {
+    //     //     // Threshold for classifying as dark or light
+    //     //     console.log('Brightness:', brightness, 'Logo URL:', logoUrl);
+    //     //     const brightnessThreshold = 40; // Midpoint on 0-255 scale
+    //     //     if (brightness < brightnessThreshold) {
+    //     //         imgElement.classList.add('dark-logo');
+    //     //     } else {
+    //     //         imgElement.classList.add('light-logo');
+    //     //     }
+    //     // });
 
-        isItDark(logoUrl, function(darkornot) {
-            if (darkornot) {
-                imgElement.classList.add('dark-logo');
-            } else {
-                imgElement.classList.add('light-logo');
-            }
-        });
-    }
+    //     isItDark(logoUrl, function(darkornot) {
+    //         if (darkornot) {
+    //             imgElement.classList.add('dark-logo');
+    //         } else {
+    //             imgElement.classList.add('light-logo');
+    //         }
+    //     });
+    // }
 
-    // Helpers: Is it dark?
-    function isItDark(imageSrc, callback) {
-        const fuzzy = 0.1;
-        const img = new Image();
-        // const img = document.createElement('img');
-        img.crossOrigin = 'Anonymous';
-        img.src = imageSrc;
-        img.style.display = 'none';
-        document.body.appendChild(img);
+    // // Helpers: Is it dark?
+    // function isItDark(imageSrc, callback) {
+    //     const fuzzy = 0.1;
+    //     const img = new Image();
+    //     // const img = document.createElement('img');
+    //     img.crossOrigin = 'Anonymous';
+    //     img.src = imageSrc;
+    //     img.style.display = 'none';
+    //     document.body.appendChild(img);
 
-        img.onload = function() {
-            // create canvas
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
+    //     img.onload = function() {
+    //         // create canvas
+    //         const canvas = document.createElement('canvas');
+    //         canvas.width = img.width;
+    //         canvas.height = img.height;
 
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(this, 0, 0);
+    //         const ctx = canvas.getContext('2d');
+    //         ctx.drawImage(this, 0, 0);
 
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
-            let r;
-            let g;
-            let b;
-            let maxRGB;
-            let light = 0;
-            let dark = 0;
+    //         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    //         const data = imageData.data;
+    //         let r;
+    //         let g;
+    //         let b;
+    //         let maxRGB;
+    //         let light = 0;
+    //         let dark = 0;
 
-            for (let x = 0, len = data.length; x < len; x += 4) {
-                r = data[x];
-                g = data[x + 1];
-                b = data[x + 2];
+    //         for (let x = 0, len = data.length; x < len; x += 4) {
+    //             r = data[x];
+    //             g = data[x + 1];
+    //             b = data[x + 2];
 
-                maxRGB = Math.max(Math.max(r, g), b);
-                if (maxRGB < 200) {
-                    dark++;
-                } else {
-                    light++;
-                }
-            }
+    //             maxRGB = Math.max(Math.max(r, g), b);
+    //             if (maxRGB < 200) {
+    //                 dark++;
+    //             } else {
+    //                 light++;
+    //             }
+    //         }
 
-            const dlDiff = ((light - dark) / (img.width * img.height));
-            if (dlDiff + fuzzy < 0) {
-                callback(true);
-            } else {
-                callback(false);
-            }
-        };
-    }
+    //         const dlDiff = ((light - dark) / (img.width * img.height));
+    //         if (dlDiff + fuzzy < 0) {
+    //             callback(true);
+    //         } else {
+    //             callback(false);
+    //         }
+    //     };
+    // }
 
-    // Helpers: calculate image brightness
-    function calculateImageBrightness(imageUrl, callback) {
-        const img = new Image();
-        img.crossOrigin = 'Anonymous'; // Handle cross-origin issues
-        img.src = imageUrl;
-        img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = img.width;
-            canvas.height = img.height;
+    // // Helpers: calculate image brightness
+    // function calculateImageBrightness(imageUrl, callback) {
+    //     const img = new Image();
+    //     img.crossOrigin = 'Anonymous'; // Handle cross-origin issues
+    //     img.src = imageUrl;
+    //     img.onload = function () {
+    //         const canvas = document.createElement('canvas');
+    //         const ctx = canvas.getContext('2d');
+    //         canvas.width = img.width;
+    //         canvas.height = img.height;
 
-            // Draw image onto canvas
-            ctx.drawImage(img, 0, 0);
+    //         // Draw image onto canvas
+    //         ctx.drawImage(img, 0, 0);
 
-            // Get pixel data
-            const imageData = ctx.getImageData(0, 0, img.width, img.height);
-            const data = imageData.data;
+    //         // Get pixel data
+    //         const imageData = ctx.getImageData(0, 0, img.width, img.height);
+    //         const data = imageData.data;
 
-            let r;
-            let g;
-            let b;
-            let avg;
-            let colorSum = 0;
+    //         let r;
+    //         let g;
+    //         let b;
+    //         let avg;
+    //         let colorSum = 0;
 
-            // Sum up brightness values
-            for (let i = 0; i < data.length; i += 4) {
-                r = data[i];
-                g = data[i + 1];
-                b = data[i + 2];
-                // Perceived brightness calculation
-                avg = (r * 299 + g * 587 + b * 114) / 1000;
-                colorSum += avg;
-            }
+    //         // Sum up brightness values
+    //         for (let i = 0; i < data.length; i += 4) {
+    //             r = data[i];
+    //             g = data[i + 1];
+    //             b = data[i + 2];
+    //             // Perceived brightness calculation
+    //             avg = (r * 299 + g * 587 + b * 114) / 1000;
+    //             colorSum += avg;
+    //         }
 
-            // Average brightness
-            const brightness = colorSum / (img.width * img.height);
+    //         // Average brightness
+    //         const brightness = colorSum / (img.width * img.height);
 
-            callback(brightness);
-        };
-    }
+    //         callback(brightness);
+    //     };
+    // }
+
     // Helpers: truncate text
-    const truncateText = (text, maxLength) => {
+    function truncateText(text, maxLength) {
         if (text.length > maxLength) {
             return text.substring(0, maxLength) + '...';
         }
-    };
+        return text;
+    }
 
     // Create slides, but initially hide them
     items.forEach((item, i) => {

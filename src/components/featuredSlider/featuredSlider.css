@@ -38,12 +38,20 @@
 
 .featured-slider .featured-info {
     position: absolute;
-    bottom: 15%;
-    left: 5%;
-    max-width: 80%;
+    /* Place this block below the top:25% container and 
+       below the logo’s ~25vw height. Adjust the 18vw as needed
+       if your logo is taller/shorter. */
+    top: calc(25% + 18vw);
+    left: 35%;
+    transform: translate(-50%, 0);
+
+    /* Adjust width to control line-wrapping for text */
+    max-width: 40vw;
     color: #fff;
-    z-index: 0;
+    z-index: 2;
     transition: transform 0.3s ease;
+    text-align: left;
+    /* Change to center if you prefer centered text */
 }
 
 .featured-logo-container {
@@ -77,11 +85,6 @@
     transform: translate(-50%, -50%) scale(1.01);
     filter: blur(1.5rem);
     z-index: 1;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-        rgba(0, 0, 0, 0.12) 0px -12px 30px,
-        rgba(0, 0, 0, 0.12) 0px 4px 6px,
-        rgba(0, 0, 0, 0.17) 0px 12px 13px,
-        rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .dark-logo {
@@ -121,13 +124,23 @@
     text-align: justify;
 }
 
+/* Keep your existing styles for the rating badges, just remove extra left-padding if needed */
 .featured-info .ratings {
-    font-family: "Titillium Web", sans-serif;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 1em;
-    padding-left: 5em;
+}
+
+/* Remove or reduce old padding that was pushing text to the left */
+.featured-info .plot,
+.featured-info .ratings {
+    padding-left: 0;
+    /* margin: 0; */
+    margin-top: 1vw
+}
+
+.featured-info .plot {
+    margin-top: 1vw;
 }
 
 .imdb-rating {
