@@ -41,7 +41,7 @@
     /* Place this block below the top:25% container and 
        below the logo’s ~25vw height. Adjust the 18vw as needed
        if your logo is taller/shorter. */
-    top: calc(25% + 18vw);
+    top: calc(25% + 15vw);
     left: 35%;
     transform: translate(-50%, 0);
 
@@ -202,17 +202,40 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* Make it massively larger than any screen/container
-       so that the radial fade finishes *beyond* visible area */
+
     width: 3000px;
     height: 3000px;
 
     pointer-events: none;
     z-index: -1;
 
-    /* A large radial gradient that goes from semi-black in the center 
-       to fully transparent well before reaching 3000px */
     background: radial-gradient(circle farthest-corner at center,
             rgba(0, 0, 0, 0.7) 0%,
             rgba(0, 0, 0, 0) 20%);
+}
+
+.slide {
+    position: relative;
+    height: 40vw;
+    /* or your desired height */
+    overflow: hidden;
+    /* ensures any overflow is hidden if needed */
+
+    /* The key: a linear mask that keeps the top 80% fully visible (black)
+       and fades smoothly to transparent over the bottom 20%. 
+       Adjust 80% as desired. */
+    -webkit-mask-image: linear-gradient(to bottom,
+            black 80%,
+            /* fully visible through here */
+            rgba(0, 0, 0, 0) 100%
+            /* fades out to transparent at bottom */
+        );
+    mask-image: linear-gradient(to bottom,
+            black 80%,
+            rgba(0, 0, 0, 0) 100%);
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
 }
