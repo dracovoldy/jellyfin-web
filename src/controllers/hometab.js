@@ -4,6 +4,8 @@ import focusManager from '../components/focusManager';
 import homeSections from '../components/homesections/homesections';
 import '../elements/emby-itemscontainer/emby-itemscontainer';
 import ServerConnections from '../components/ServerConnections';
+import { renderFeaturedSlider } from '../components/featuredSlider/featuredSlider';
+import '../components/featuredSlider/featuredSlider.css';
 
 class HomeTab {
     constructor(view, params) {
@@ -29,6 +31,9 @@ class HomeTab {
         const apiClient = this.apiClient;
         this.destroyHomeSections();
         this.sectionsRendered = true;
+
+        loadFeaturedSlider(view, apiClient);
+
         return apiClient.getCurrentUser()
             .then(user => homeSections.loadSections(view.querySelector('.sections'), apiClient, user, userSettings))
             .then(() => {
@@ -62,6 +67,36 @@ class HomeTab {
             homeSections.destroySections(sectionsContainer);
         }
     }
+}
+
+function loadFeaturedSlider(view, apiClient) {
+    const featuredBar = view.querySelector('.featured-media-bar');
+    if (!featuredBar) return;
+
+    const queryParams = {
+        UserId: apiClient.getCurrentUserId(),
+        IncludeItemTypes: 'Movie,Series',
+        Recursive: 'true',
+        Filter: 'IsUnplayed',
+        EnableImages: 'true',
+        SortBy: 'Random',
+        Limit: 200,
+        hasOverview: true,
+        imageTypes: 'Logo,Backdrop',
+        fields: ['Overview'],
+        EnableUserData: true // To ensure proper user-specific filters
+    };
+
+    const qs = Object.keys(queryParams)
+        .map(key => key + '=' + encodeURIComponent(queryParams[key]))
+        .join('&');
+
+    apiClient.getJSON(apiClient.getUrl(`/Items?${qs}`))
+        .then(function (result) {
+            console.log('Featured Items:', result);
+            renderFeaturedSlider(featuredBar, result.Items || [], apiClient);
+        })
+        .catch(err => console.error(err));
 }
 
 function onHomeScreenSettingsChanged() {

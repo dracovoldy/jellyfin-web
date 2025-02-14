@@ -1,0 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+
+.featured-slider {
+    height: 40vw;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+/* @media (max-width: 768px) {
+    .featured-slider {
+        max-width: 40vw;
+    }
+} */
+
+.featured-slider .slide {
+    position: relative;
+    min-width: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.featured-backdrop {
+    position: absolute;
+    right: 0em;
+    height: 100%;
+    mask-image: linear-gradient(90deg, transparent 2%, transparent 5%, rgba(36, 33, 33, 0.874) 12%), linear-gradient(1turn, #000 .5%, transparent 5%);
+    mask-composite: subtract;
+    -webkit-mask-composite: subtract;
+    z-index: 0;
+}
+
+.featured-slider .gradient-overlay {
+/* .gradient-overlay { */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.featured-slider .featured-info {
+    position: absolute;
+    bottom: 15%;
+    left: 5%;
+    max-width: 80%;
+    color: #fff;
+    z-index: 0;
+    transition: transform 0.3s ease;
+}
+
+.featured-logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+}
+
+.featured-logo {
+    /* left: 50%;
+    top: 50%; */
+    max-height: 40%;
+    max-width: 30%;
+    position: absolute;
+    z-index: 2;
+    filter: brightness(1.5);
+    padding-top: 65px;
+    padding-left: 11em;
+}
+
+.featured-logo-blur {
+    max-height: 40%;
+    max-width: 30%;
+    position: absolute;
+    padding-top: 65px;
+    padding-left: 11em;
+    z-index: 1;
+    filter: blur(1.5rem);
+    transform: scale(1.01);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.dark-logo {
+    filter: invert(1) brightness(1.2) contrast(0.9);
+}
+
+/* Info Section */
+.age-rating {
+    display: inline-block;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    background: rgb(255 255 255 / 0.8);
+    color: #000;
+    border: none;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 0 0.6em;
+}
+
+.featured-info .plot {
+    padding-left: 5em;
+    font-family: "Titillium Web", sans-serif;
+    position: relative;
+    bottom: 0;
+    color: #fff;
+    width: 100%;
+    height: 60%;
+    font-size: 15px;
+    border-radius: 5px;
+    z-index: 3;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+}
+
+.featured-info .ratings {
+    /* font-family: "Titillium Web", sans-serif;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    padding-left: 5em; */
+
+    font-family: "Titillium Web", sans-serif;
+    display: flex;                  /* Apply Flexbox layout */
+    align-items: center;            /* Vertically center align all items */
+    justify-content: flex-start;    /* Align items to the start horizontally */
+    gap: 1em;                       /* Add space between each item */
+    padding-left: 5em;              /* Keep original padding if necessary for layout */
+}
+
+.imdb-rating {
+    display: flex;                  /* Enable Flexbox layout for alignment */
+    align-items: center;            /* Center align items vertically */
+    gap: 0.5em;                     /* Add some space between the logo and the rating text */
+}
+
+.tomato-rating {
+    display: flex;                  /* Enable Flexbox layout */
+    align-items: center;            /* Center align items vertically */
+    gap: 0.3em;                     /* Add spacing between the logo and the rating text */
+}
+
+.featured-slider .featured-info h3,
+.featured-slider .featured-info p {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    margin: 0 0 5px 0;
+}
+
+.featured-slider .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+    cursor: pointer;
+    padding: 8px;
+    color: #fff;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.featured-slider .left-arrow {
+    left: 10px;
+}
+
+.featured-slider .right-arrow {
+    right: 10px;
+}
+
+/* .featured-slider .slide::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #000 49%, rgba(0, 0, 0, 0) 70%);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+} */
